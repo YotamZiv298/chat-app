@@ -1,0 +1,28 @@
+/* @media all and (min-width: 480px) {
+    .login {
+        padding: 60px 0;
+        background-color: darkgrey;
+        width: 25%;
+    }
+  
+    .login form {
+        margin: 0 auto;
+        max-width: 200px;
+    }
+} */
+
+.login-container {
+    background-color: #2A2F32;
+    padding: 15px;
+    border-radius: 10px;
+    width: 20%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
