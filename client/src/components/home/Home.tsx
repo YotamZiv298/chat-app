@@ -6,6 +6,7 @@ import { Button, Col, Container, Nav, Navbar, Row } from 'react-bootstrap';
 import Chat from '../chat/Chat';
 import ChatList from '../chatList/ChatList';
 import Login from '../login/Login';
+import { withRouter } from 'react-router-dom';
 
 const Home = () => {
     return (
@@ -46,4 +47,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default withRouter(Home);
