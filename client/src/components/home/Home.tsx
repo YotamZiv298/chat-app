@@ -5,10 +5,11 @@ import { Button, Col, Container, Nav, Navbar, Row } from 'react-bootstrap';
 
 import Chat from '../chat/Chat';
 import ChatList from '../chatList/ChatList';
-import Login from '../login/Login';
-import { withRouter } from 'react-router-dom';
+import { useLocation, withRouter } from 'react-router-dom';
 
 const Home = () => {
+    const location = useLocation<any>();
+
     return (
         <React.Fragment>
             <Container fluid className="home-container">
@@ -17,15 +18,18 @@ const Home = () => {
                         <Navbar variant="dark" className="action-navbar">
                             <Container fluid>
                                 <Nav className="me-auto">
-                                    <Nav.Link href="">New Chat</Nav.Link>
-                                    <Nav.Link href="">New Group</Nav.Link>
+                                    <Nav.Link onClick={ChatList.newChat}>New Chat</Nav.Link>
+                                    <Nav.Link onClick={ChatList.newGroup}>New Group</Nav.Link>
                                 </Nav>
                             </Container>
                         </Navbar>
                     </Col>
                     <Col>
                         <div className="logout-container">
-                            <Button variant="danger" href="">Logout</Button>{' '}
+                            <h4 style={{ color: 'white' }}>
+                                Hello, {location.state.nickname}
+                            </h4>
+                            <Button variant="danger" onClick={() => window.location.reload()}>Logout</Button>{' '}
                         </div>
                     </Col>
                 </Row>
@@ -43,7 +47,7 @@ const Home = () => {
                     </Col>
                 </Row>
             </Container>
-        </React.Fragment>
+        </React.Fragment >
     );
 };
 
