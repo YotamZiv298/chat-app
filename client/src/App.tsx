@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 
 import './App.css';
@@ -7,41 +7,48 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Redirect
 } from 'react-router-dom';
 import Home from './components/home/Home';
 import Login from './components/login/Login';
+import PrivateRoute from './components/PrivateRoute';
+
+// export const auth = {
+//   isAuthenticated: false,
+
+//   authenticate(cb: (...args: any[]) => void) {
+//     this.isAuthenticated = true;
+//     setTimeout(cb, 100);
+//   },
+
+//   signout(cb: (...args: any[]) => void) {
+//     this.isAuthenticated = false;
+//     setTimeout(cb, 100);
+//   }
+// };
+
+// function PrivateRoute({ isAuth: isAuth, component: Component, ...rest }) {
+//   return (
+//     <Route {...rest} render={() => {
+//       return auth.isAuthenticated
+//         ? children
+//         : <Redirect to="/login" />;
+//     }} />
+//   );
+// };
 
 const App = () => {
+  const [isAuth, setIsAuth] = useState(false);
+
   return (
     <Router>
       <div className="App">
-        <Route path="/" exact component={Home} />
-        <Route path="/login" exact component={Login} />
+        <PrivateRoute exact path="/" component={Home} isAuth={isAuth} />
+        <Route exact path="/login" component={() => <Login isAuth={isAuth} setIsAuth={setIsAuth} />} />
       </div>
     </Router>
   );
 };
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.tsx</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
 
 export default App;
