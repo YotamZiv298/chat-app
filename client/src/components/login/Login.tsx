@@ -17,22 +17,27 @@ const Login = (props: LoginProps) => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 
-        await fetch('http://localhost:5000/users', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                nickname: formNickname,
-            })
-        }).then(res => res.json())
-            .then(data => {
-                console.log(data)
-            });
+        const re = /^\S*$/;
+        if (formNickname.length >= 4 && re.test(formNickname)) {
+            await fetch('http://localhost:5000/users', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nickname: formNickname
+                })
+            }).then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                });
 
-        props.setIsAuth(true);
-        nav.push('/', { nickname: formNickname });
+            props.setIsAuth(true);
+            nav.push('/', { nickname: formNickname });
+        } else {
+            alert('Please enter valid nickname');
+        }
     };
 
     return (
