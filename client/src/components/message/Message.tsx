@@ -10,18 +10,15 @@ type MessageProps = {
 
 const Message = (props: MessageProps) => {
     return (
-        <Card border="dark" bg="secondary" style={{ width: '18rem' }} className="mb-2" >
-            <Card.Body>
-                <Card.Title className="h5">
+        <Card border="dark" style={{ minWidth: '300px', maxWidth: '1150px', borderRadius: '10px', display: 'inline-block' }} className="mb-2">
+            <Card.Body className="message-body">
+                <Card.Title className="h5" style={{ color: '#6bcbef', fontWeight: 'bold' }}>
                     {props.user.nickname}
                 </Card.Title>
-                <Card.Text className="h6">
+                <Card.Text className="h6" style={{ color: 'white' }}>
                     {props.value}
                 </Card.Text>
-                {/* <Card.Subtitle className="mb-2 text-muted" >
-                    {props.date}
-                </Card.Subtitle> */}
-                <Card.Title className="h6">
+                <Card.Title className="h6" style={{ color: '#d4d5d7', textAlign: 'right' }}>
                     {props.date}
                 </Card.Title>
             </Card.Body>
