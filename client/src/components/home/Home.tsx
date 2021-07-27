@@ -14,16 +14,6 @@ const Home = () => {
         <React.Fragment>
             <Container fluid className="home-container">
                 <Row>
-                    <Col md={2}>
-                        <Navbar variant="dark" className="action-navbar">
-                            <Container fluid>
-                                <Nav className="me-auto">
-                                    <Nav.Link onClick={ChatList.newChat}>New Chat</Nav.Link>
-                                    <Nav.Link onClick={ChatList.newGroup}>New Group</Nav.Link>
-                                </Nav>
-                            </Container>
-                        </Navbar>
-                    </Col>
                     <Col>
                         <div className="logout-container">
                             <h4 style={{ color: 'white' }}>
@@ -34,17 +24,17 @@ const Home = () => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col md={2}>
+                    <Col style={{ height: '90vh', overflow: 'auto' }}>
                         <ChatList chatList={[]} />
                     </Col>
-                    <Col>
+                    {/* <Col>
                         <Chat
                             messages={{
                                 current: [],
                                 user: []
                             }}
                         />
-                    </Col>
+                    </Col> */}
                 </Row>
             </Container>
         </React.Fragment >
