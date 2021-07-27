@@ -1,7 +1,8 @@
 .chat-list {
     /* background-color: #2A2F32; */
-    background-color: brown;
-    border-radius: 0 0 0 10px;
+    background-color: #3a4145;
+    border-radius: 0 0 10px 10px;
+    padding-bottom: 15px;
 }
 
 .chat-name {
