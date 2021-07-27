@@ -1,5 +1,7 @@
 .chat-container {
-    background-color: blueviolet;
+    background-color: #2A2F32;
     /* background-color: #2A2F32; */
-    border-radius: 0 0 10px 0;
+    padding: 50px;
+    padding-bottom: 25px;
+    border-radius: 10px;
 }
