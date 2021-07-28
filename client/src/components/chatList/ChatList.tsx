@@ -16,7 +16,7 @@ const ChatList = (props: ChatListProps) => {
     const newDirect = () => {
         setChatList(prev => [...prev,
         <Nav.Item>
-            <Nav.Link eventKey={count} style={{ color: 'white' }}>
+            <Nav.Link eventKey={`chat-${count}`} style={{ color: 'white' }}>
                 direct
             </Nav.Link>
         </Nav.Item>
@@ -27,7 +27,7 @@ const ChatList = (props: ChatListProps) => {
     const newGroup = () => {
         setChatList(prev => [...prev,
         <Nav.Item>
-            <Nav.Link eventKey={count} style={{ color: 'white' }}>
+            <Nav.Link eventKey={`chat-${count}`} style={{ color: 'white' }}>
                 group
             </Nav.Link>
         </Nav.Item>
@@ -42,35 +42,27 @@ const ChatList = (props: ChatListProps) => {
                     <Row>
                         <Col md={2}>
                             <Nav variant="pills" className="flex-column">
-                                {chatList.map((chat, index) =>
-                                    <div key={index} className="chat-name">
-                                        <h5>{chat}</h5>
+                                {chatList.map((chatName, index) =>
+                                    <div key={`chat-name-${index}`} className="chat-name">
+                                        <h5>{chatName}</h5>
                                     </div>
                                 )}
                             </Nav>
                         </Col>
                         <Col>
                             <Tab.Content>
-                                <Tab.Pane eventKey="0">
-                                    <Chat
-                                        messages={{
-                                            self: [
-                                                // <Message
-                                                //     user={{ nickname: 'yotam' }}
-                                                //     value='Hey'
-                                                //     date='19:00'
-                                                // />
-                                            ],
-                                            user: [
-                                                // <Message
-                                                //     user={{ nickname: 'boss' }}
-                                                //     value='Sup'
-                                                //     date='17:00'
-                                                // />
-                                            ]
-                                        }}
-                                    />
-                                </Tab.Pane>
+                                {[...Array(count)].map((element, index) => (
+                                    <Tab.Pane eventKey={`chat-${index}`}>
+                                        <Chat
+                                            messages={{
+                                                self: [
+                                                ],
+                                                user: [
+                                                ]
+                                            }}
+                                        />
+                                    </Tab.Pane>
+                                ))}
                             </Tab.Content>
                         </Col>
                     </Row>
