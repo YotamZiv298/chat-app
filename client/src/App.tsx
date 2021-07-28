@@ -13,6 +13,7 @@ import {
 import Home from './components/home/Home';
 import Login from './components/login/Login';
 import PrivateRoute from './components/PrivateRoute';
+import { io } from 'socket.io-client';
 
 // export const auth = {
 //   isAuthenticated: false,
@@ -39,6 +40,8 @@ import PrivateRoute from './components/PrivateRoute';
 // };
 
 const App = () => {
+  const socket = io('http://localhost:5000')
+
   const [isAuth, setIsAuth] = useState(false);
 
   return (
