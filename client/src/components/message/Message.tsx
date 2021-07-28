@@ -10,7 +10,15 @@ type MessageProps = {
 
 const Message = (props: MessageProps) => {
     return (
-        <Card border="dark" style={{ minWidth: '300px', maxWidth: '1150px', borderRadius: '10px', display: 'inline-block' }} className="mb-2">
+        <Card
+            border="dark"
+            style={{
+                minWidth: '100px',
+                maxWidth: '1150px',
+                borderRadius: '10px',
+                display: 'inline-block'
+            }}
+            className="mb-2">
             <Card.Body className="message-body">
                 <Card.Title className="h5" style={{ color: '#6bcbef', fontWeight: 'bold' }}>
                     {props.user.nickname}
