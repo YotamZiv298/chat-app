@@ -22,20 +22,38 @@ const Chat = (props: ChatProps) => {
 
     const [message, setMessage] = useState('');
 
-    const addSelfMessage = (message: string) => {
+    const addSelfMessage = (msgText: string) => {
+        let user = { nickname: 'self' };
+        let value = msgText;
         let date = new Date();
+        let timeNow = date.getHours() + ':' + date.getMinutes();
 
         let msg = <Message
-            user={{ nickname: 'self' }}
-            value={message}
-            date={date.getHours() + ':' + date.getMinutes()}
+            user={user}
+            value={value}
+            date={timeNow}
         />;
 
-        setSelfMessages(prev => [...prev, msg]);
+        // fetch('http://localhost:5000/users', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         message: {
+        //             'user': user,
+        //             'value': value,
+        //             'date': timeNow
+        //         }
+        //     })
+        // }).then(res => res.json())
+        //     .then(data => {
+        //         console.log(data);
+        //     });
 
-        setAllMessages(prev => [...prev,
-            msg
-        ]);
+        setSelfMessages(prev => [...prev, msg]);
+        setAllMessages(prev => [...prev, msg]);
     };
 
     const displayMessages = () => {
@@ -51,17 +69,14 @@ const Chat = (props: ChatProps) => {
             // }));
 
             return (
-                // self
                 allMessages.map((msg, index) =>
                     <Row>
-                        <Col>
+                        <Col key={index}>
                             {msg}
                             <br />
                         </Col>
                     </Row>
                 )
-                //user
-
             );
         } else {
             return (
@@ -80,6 +95,7 @@ const Chat = (props: ChatProps) => {
         if (message) {
             addSelfMessage(message);
         }
+        setMessage('');
     };
 
     return (
@@ -97,9 +113,9 @@ const Chat = (props: ChatProps) => {
                                     onChange={(e) => {
                                         setMessage(e.target.value)
                                     }}
-                                    as="textarea"
-                                    rows={1}
-                                    style={{ resize: 'none', overflow: 'hidden' }}
+                                // as="textarea"
+                                // rows={1}
+                                // style={{ resize: 'none', overflow: 'hidden' }}
                                 />
                                 <Button variant="success" type="submit" className="login-submit-button">
                                     <b>{'>'}</b>
