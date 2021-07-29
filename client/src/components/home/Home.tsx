@@ -32,14 +32,6 @@ const Home = () => {
                     <Col style={{ height: '90vh', overflow: 'auto' }}>
                         <ChatList chatList={[]} />
                     </Col>
-                    {/* <Col>
-                        <Chat
-                            messages={{
-                                current: [],
-                                user: []
-                            }}
-                        />
-                    </Col> */}
                 </Row>
             </Container>
         </React.Fragment>
