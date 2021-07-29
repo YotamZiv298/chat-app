@@ -15,32 +15,9 @@ import Login from './components/login/Login';
 import PrivateRoute from './components/PrivateRoute';
 import { io } from 'socket.io-client';
 
-// export const auth = {
-//   isAuthenticated: false,
-
-//   authenticate(cb: (...args: any[]) => void) {
-//     this.isAuthenticated = true;
-//     setTimeout(cb, 100);
-//   },
-
-//   signout(cb: (...args: any[]) => void) {
-//     this.isAuthenticated = false;
-//     setTimeout(cb, 100);
-//   }
-// };
-
-// function PrivateRoute({ isAuth: isAuth, component: Component, ...rest }) {
-//   return (
-//     <Route {...rest} render={() => {
-//       return auth.isAuthenticated
-//         ? children
-//         : <Redirect to="/login" />;
-//     }} />
-//   );
-// };
-
 const App = () => {
     const [isAuth, setIsAuth] = useState(false);
+    const [id, setId] = useState();
 
     return (
         <Router>
@@ -50,7 +27,11 @@ const App = () => {
                     exact
                     path='/login'
                     component={() => (
-                        <Login isAuth={isAuth} setIsAuth={setIsAuth} />
+                        <Login
+                            isAuth={isAuth}
+                            setIsAuth={setIsAuth}
+                            onIdSubmit={setId}
+                        />
                     )}
                 />
             </div>
