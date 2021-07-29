@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { User } from './user.model';
 
@@ -42,7 +42,7 @@ export class UsersService {
     }
 
     private findUser(id: string): [User, number] {
-        const index = this.users.findIndex(prod => prod.id === id);
+        const index = this.users.findIndex((prod) => prod.id === id);
         const user = this.users[index];
 
         if (!user) {

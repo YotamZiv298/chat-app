@@ -5,19 +5,17 @@ import {
     Get,
     Param,
     Patch,
-    Post
+    Post,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-    constructor(private readonly usersService: UsersService) { }
+    constructor(private readonly usersService: UsersService) {}
 
     @Post()
     addUser(@Body('nickname') nickname: string) {
-        const generatedId = this.usersService.addUser(
-            nickname,
-        );
+        const generatedId = this.usersService.addUser(nickname);
 
         return { id: generatedId };
     }
@@ -33,10 +31,7 @@ export class UsersController {
     }
 
     @Patch(':id')
-    updateUser(
-        @Param('id') id: string,
-        @Body('nickname') nickname: string,
-    ) {
+    updateUser(@Param('id') id: string, @Body('nickname') nickname: string) {
         this.usersService.updateUser(id, nickname);
 
         return null;
@@ -48,5 +43,4 @@ export class UsersController {
 
         return null;
     }
-
 }
