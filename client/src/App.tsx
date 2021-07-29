@@ -4,11 +4,11 @@ import logo from './logo.svg';
 import './App.css';
 
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    Redirect,
 } from 'react-router-dom';
 import Home from './components/home/Home';
 import Login from './components/login/Login';
@@ -40,18 +40,22 @@ import { io } from 'socket.io-client';
 // };
 
 const App = () => {
-  const socket = io('http://localhost:5000')
+    const [isAuth, setIsAuth] = useState(false);
 
-  const [isAuth, setIsAuth] = useState(false);
-
-  return (
-    <Router>
-      <div className="App">
-        <PrivateRoute exact path="/" component={Home} isAuth={isAuth} />
-        <Route exact path="/login" component={() => <Login isAuth={isAuth} setIsAuth={setIsAuth} />} />
-      </div>
-    </Router>
-  );
+    return (
+        <Router>
+            <div className='App'>
+                <PrivateRoute exact path='/' component={Home} isAuth={isAuth} />
+                <Route
+                    exact
+                    path='/login'
+                    component={() => (
+                        <Login isAuth={isAuth} setIsAuth={setIsAuth} />
+                    )}
+                />
+            </div>
+        </Router>
+    );
 };
 
 export default App;

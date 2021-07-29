@@ -5,8 +5,8 @@ import { useHistory } from 'react-router-dom';
 import './Login.css';
 
 type LoginProps = {
-    isAuth: boolean,
-    setIsAuth: any
+    isAuth: boolean;
+    setIsAuth: any;
 };
 
 const Login = (props: LoginProps) => {
@@ -22,14 +22,15 @@ const Login = (props: LoginProps) => {
             await fetch('http://localhost:5000/users', {
                 method: 'POST',
                 headers: {
-                    'Accept': 'application/json',
+                    Accept: 'application/json',
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    nickname: formNickname
-                })
-            }).then(res => res.json())
-                .then(data => {
+                    nickname: formNickname,
+                }),
+            })
+                .then((res) => res.json())
+                .then((data) => {
                     console.log(data);
                 });
 
@@ -45,19 +46,22 @@ const Login = (props: LoginProps) => {
             <Container fluid>
                 <Row>
                     <Col md={{ span: 4, offset: 4 }}>
-                        <div className="login-container">
+                        <div className='login-container'>
                             <Form onSubmit={handleSubmit}>
                                 <Form.Control
-                                    size="lg"
+                                    size='lg'
                                     autoFocus
-                                    placeholder="Enter nickname"
+                                    placeholder='Enter nickname'
                                     value={formNickname}
                                     onChange={(e) => {
-                                        setFormNickname(e.target.value)
+                                        setFormNickname(e.target.value);
                                     }}
                                 />
                                 <br />
-                                <Button type="submit" className="login-submit-button">
+                                <Button
+                                    type='submit'
+                                    className='login-submit-button'
+                                >
                                     Start Chatting
                                 </Button>
                             </Form>
@@ -65,7 +69,7 @@ const Login = (props: LoginProps) => {
                     </Col>
                 </Row>
             </Container>
-        </React.Fragment >
+        </React.Fragment>
     );
 };
 

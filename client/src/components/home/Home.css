@@ -4,12 +4,12 @@
 }
 
 .action-navbar {
-    background-color: #2A2F32;
+    background-color: #2a2f32;
     border-radius: 0 0 10px 10px;
 }
 
 .logout-container {
-    background-color: #2A2F32;
+    background-color: #2a2f32;
     display: flex;
     justify-content: space-between;
     padding: 9px;

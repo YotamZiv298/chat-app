@@ -12,14 +12,19 @@ const Home = () => {
 
     return (
         <React.Fragment>
-            <Container fluid className="home-container">
+            <Container fluid className='home-container'>
                 <Row>
                     <Col>
-                        <div className="logout-container">
+                        <div className='logout-container'>
                             <h4 style={{ color: 'white' }}>
                                 Hello, {location.state.nickname}
                             </h4>
-                            <Button variant="danger" onClick={() => window.location.reload()}>Logout</Button>{' '}
+                            <Button
+                                variant='danger'
+                                onClick={() => window.location.reload()}
+                            >
+                                Logout
+                            </Button>{' '}
                         </div>
                     </Col>
                 </Row>
@@ -37,7 +42,7 @@ const Home = () => {
                     </Col> */}
                 </Row>
             </Container>
-        </React.Fragment >
+        </React.Fragment>
     );
 };
 
