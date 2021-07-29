@@ -1,10 +1,19 @@
 import { Logger } from '@nestjs/common';
-import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer, WsResponse } from '@nestjs/websockets';
+import {
+    OnGatewayConnection,
+    OnGatewayDisconnect,
+    OnGatewayInit,
+    SubscribeMessage,
+    WebSocketGateway,
+    WebSocketServer,
+    WsResponse,
+} from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
 
-@WebSocketGateway()
-export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
-
+@WebSocketGateway({ cors: { origin: '*' } })
+export class AppGateway
+    implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
+{
     // @WebSocketServer() wss: Server;
     private logger: Logger = new Logger('AppGateway');
 
@@ -26,5 +35,4 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
         // this.wss.emit('msgToClient', text); TO EVERYONE
         client.emit('msgToClient', text);
     }
-
 }
