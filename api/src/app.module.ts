@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppGateway } from './app.gateway';
 import { AppService } from './app.service';
+import { ChatGateway } from './chat/chat.gateway';
 
 import { UsersModule } from './users/users.module';
 
@@ -11,6 +12,6 @@ import { UsersModule } from './users/users.module';
     // providers: [AppService, AppGateway],
     imports: [UsersModule],
     controllers: [],
-    providers: [AppGateway],
+    providers: [ChatGateway, AppGateway],
 })
 export class AppModule {}
