@@ -7,15 +7,19 @@ import './Login.css';
 type LoginProps = {
     isAuth: boolean;
     setIsAuth: any;
+    onIdSubmit: any;
 };
 
 const Login = (props: LoginProps) => {
+    const idRef = useRef<HTMLInputElement>(null);
     const [formNickname, setFormNickname] = useState('');
 
     let nav = useHistory();
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+
+        props.onIdSubmit(idRef.current);
 
         const re = /^\S*$/;
         if (formNickname.length >= 4 && re.test(formNickname)) {
@@ -49,6 +53,7 @@ const Login = (props: LoginProps) => {
                         <div className='login-container'>
                             <Form onSubmit={handleSubmit}>
                                 <Form.Control
+                                    type='text'
                                     size='lg'
                                     autoFocus
                                     placeholder='Enter nickname'
@@ -56,6 +61,8 @@ const Login = (props: LoginProps) => {
                                     onChange={(e) => {
                                         setFormNickname(e.target.value);
                                     }}
+                                    ref={idRef}
+                                    required
                                 />
                                 <br />
                                 <Button
