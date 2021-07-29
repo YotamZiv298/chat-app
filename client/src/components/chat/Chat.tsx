@@ -1,21 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 import './Chat.css';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 
 import Message from '../message/Message';
+import socket from '../socketService';
 
 type ChatProps = {
     messages: {
         // self: typeof Message[],
         // user: typeof Message[]
-        self: any[],
-        user: any[]
+        self: any[];
+        user: any[];
     };
 };
 
 const Chat = (props: ChatProps) => {
-    const [allMessages, setAllMessages] = useState([...props.messages.self, ...props.messages.user]);
+    const [allMessages, setAllMessages] = useState([
+        ...props.messages.self,
+        ...props.messages.user,
+    ]);
 
     const [selfMessages, setSelfMessages] = useState(props.messages.self);
     const [userMessages, setUserMessages] = useState(props.messages.user);
@@ -28,11 +32,7 @@ const Chat = (props: ChatProps) => {
         let date = new Date();
         let timeNow = date.getHours() + ':' + date.getMinutes();
 
-        let msg = <Message
-            user={user}
-            value={value}
-            date={timeNow}
-        />;
+        let msg = <Message user={user} value={value} date={timeNow} />;
 
         // fetch('http://localhost:5000/users', {
         //     method: 'POST',
@@ -52,8 +52,18 @@ const Chat = (props: ChatProps) => {
         //         console.log(data);
         //     });
 
-        setSelfMessages(prev => [...prev, msg]);
-        setAllMessages(prev => [...prev, msg]);
+        setSelfMessages((prev) => [...prev, msg]);
+        setAllMessages((prev) => [...prev, msg]);
+    };
+
+    const sendMessage = (msg: string) => {
+        console.log(`send: ${msg}`);
+        socket.emit('msgToServer', msg);
+    };
+
+    const receiveMessage = (msg: string) => {
+        console.log(`recv: ${msg}`);
+        addSelfMessage(msg);
     };
 
     const displayMessages = () => {
@@ -68,16 +78,14 @@ const Chat = (props: ChatProps) => {
             //     user: props.messages.user
             // }));
 
-            return (
-                allMessages.map((msg, index) =>
-                    <Row>
-                        <Col key={index}>
-                            {msg}
-                            <br />
-                        </Col>
-                    </Row>
-                )
-            );
+            return allMessages.map((msg, index) => (
+                <Row>
+                    <Col key={index}>
+                        {msg}
+                        <br />
+                    </Col>
+                </Row>
+            ));
         } else {
             return (
                 <Row>
@@ -93,31 +101,45 @@ const Chat = (props: ChatProps) => {
         e.preventDefault();
 
         if (message) {
-            addSelfMessage(message);
+            sendMessage(message);
+            // addSelfMessage(message);
         }
         setMessage('');
     };
 
+    useEffect(() => {
+        socket.on('msgToClient', (msg) => {
+            receiveMessage(msg);
+        });
+    }, []);
+
     return (
         <React.Fragment>
-            <div className="chat-container" style={{ overflow: 'auto' }}>
+            <div className='chat-container' style={{ overflow: 'auto' }}>
                 <Container fluid>
                     {displayMessages()}
                     <Row>
                         <Col>
-                            <Form onSubmit={handleSubmit} style={{ display: 'flex' }}>
+                            <Form
+                                onSubmit={handleSubmit}
+                                style={{ display: 'flex' }}
+                            >
                                 <Form.Control
                                     autoFocus
-                                    placeholder="Type a message"
+                                    placeholder='Type a message'
                                     value={message}
                                     onChange={(e) => {
-                                        setMessage(e.target.value)
+                                        setMessage(e.target.value);
                                     }}
-                                // as="textarea"
-                                // rows={1}
-                                // style={{ resize: 'none', overflow: 'hidden' }}
+                                    // as="textarea"
+                                    // rows={1}
+                                    // style={{ resize: 'none', overflow: 'hidden' }}
                                 />
-                                <Button variant="success" type="submit" className="login-submit-button">
+                                <Button
+                                    variant='success'
+                                    type='submit'
+                                    className='login-submit-button'
+                                >
                                     <b>{'>'}</b>
                                 </Button>
                             </Form>
