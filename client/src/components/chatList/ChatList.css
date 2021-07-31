@@ -3,6 +3,8 @@
     background-color: #3a4145;
     border-radius: 0 0 10px 10px;
     padding-bottom: 15px;
+    height: 100%;
+    width: 300px;
 }
 
 .chat-name {
