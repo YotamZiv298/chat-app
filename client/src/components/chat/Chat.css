@@ -3,5 +3,10 @@
     /* background-color: #2A2F32; */
     padding: 50px;
     padding-bottom: 25px;
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
+    overflow-y: auto;
+    height: 750px;
+    display: flex;
+    flex-direction: column-reverse;
+    height: 90vh;
 }
