@@ -189,6 +189,9 @@ const ChatList = (props: ChatListProps) => {
                                 <Nav
                                     variant='tabs'
                                     className='justify-content-center'
+                                    style={{
+                                        width: '100vw!important',
+                                    }}
                                 >
                                     <Nav.Item>
                                         <Nav.Link
