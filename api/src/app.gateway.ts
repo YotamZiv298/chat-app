@@ -37,6 +37,7 @@ export class AppGateway
     handleDisconnect(client: Socket) {
         // throw new Error('Method not implemented.');
         this.logger.log(`Client disconnected: ${client.id}`);
+        this.ids.delete(client);
     }
 
     // @SubscribeMessage('send-message')
@@ -52,7 +53,9 @@ export class AppGateway
         @MessageBody('recipients') recipients: any[],
         @MessageBody('text') text: string
     ): void {
-        this.logger.log(`\n----sender-id:----\n----${this.ids.get(client)}----`);
+        this.logger.log(
+            `\n----sender-id:----\n----${this.ids.get(client)}----`
+        );
         // this.logger.log(`\n----sender-id:----\n----${this.id}----`);
         // this.logger.log(`recievers-ids:  ${recipients}`);
 
