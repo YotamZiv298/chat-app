@@ -16,7 +16,8 @@ export class AppGateway
     implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
     @WebSocketServer() server: Server;
-    private id: string | string[];
+    // private id: string | string[];
+    private ids = new Map<Socket, string | string[]>();
     private logger: Logger = new Logger('AppGateway');
 
     afterInit(server: Server) {
@@ -27,8 +28,10 @@ export class AppGateway
         this.logger.log(
             `\n ---- Client connected: ----\n---- ${client.id} ----`
         );
-        this.id = client.handshake.query.id;
-        client.join(this.id);
+        this.ids.set(client, client.handshake.query.id);
+        client.join(client.handshake.query.id);
+        // this.id = client.handshake.query.id;
+        // client.join(this.id);
     }
 
     handleDisconnect(client: Socket) {
@@ -49,10 +52,12 @@ export class AppGateway
         @MessageBody('recipients') recipients: any[],
         @MessageBody('text') text: string
     ): void {
-        this.logger.log(`\n----sender-id:----\n----${this.id}----`);
+        this.logger.log(`\n----sender-id:----\n----${this.ids.get(client)}----`);
+        // this.logger.log(`\n----sender-id:----\n----${this.id}----`);
         // this.logger.log(`recievers-ids:  ${recipients}`);
 
         recipients.forEach((recipient) => {
+            this.logger.log(`\n-----------------------------------------\n`);
             this.logger.log(`\n----recieve-id:----\n----${recipient}----`);
 
             const newRecipients = recipients.filter((r) => r !== recipient);
@@ -60,13 +65,13 @@ export class AppGateway
             this.logger.log(
                 `\n----newRecipients:----\n----${newRecipients}----`
             );
-            newRecipients.push(this.id);
+            newRecipients.push(this.ids.get(client));
             this.logger.log(
                 `\n----newRecipients:----\n----${newRecipients}----`
             );
             client.broadcast.to(recipient).emit('receive-message', {
                 recipients: newRecipients,
-                sender: this.id,
+                sender: this.ids.get(client),
                 text,
             });
         });
