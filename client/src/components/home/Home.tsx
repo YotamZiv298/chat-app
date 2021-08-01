@@ -49,7 +49,7 @@ const Home = (props: HomeProps) => {
                     <Col
                         md={2}
                         style={{
-                            height: '90vh',
+                            height: '85vh',
                             maxWidth: '100%' /*, overflow: 'auto' */,
                         }}
                     >
