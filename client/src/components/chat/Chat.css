@@ -5,8 +5,8 @@
     padding-bottom: 25px;
     border-radius: 0 0 10px 10px;
     overflow-y: auto;
-    height: 750px;
+    /* height: 750px; */
     display: flex;
     flex-direction: column-reverse;
-    height: 90vh;
+    height: 85vh;
 }
