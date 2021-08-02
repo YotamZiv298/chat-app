@@ -22,9 +22,20 @@ const ChatsProvider = (props: ChatsProviderProps) => {
     const { contacts } = useContacts();
     const socket = useSocket();
 
-    const createChat = (recipients: any) => {
+    const createChat = async (recipients: any) => {
+        const newChat = { recipients, messages: [] };
+        const reqOptions = {
+            method: 'PATCH',
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify({
+                chat: newChat,
+                contact: undefined,
+            }),
+        };
+        await fetch(`http://localhost:5000/users/${props.id}`, reqOptions);
+
         setChats((prevChats: any) => {
-            return [...prevChats, { recipients, messages: [] }];
+            return [...prevChats, newChat];
         });
     };
 

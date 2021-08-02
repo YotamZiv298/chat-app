@@ -33,9 +33,17 @@ const Login = (props: LoginProps) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        sendToApi(idRef.current?.value);
-        props.onIdSubmit(idRef.current?.value);
-        nav.push('/');
+        const id = idRef.current?.value;
+
+        await fetch(`http://localhost:5000/users/${id}`).then((res) => {
+            if (res.ok) {
+                sendToApi(id);
+                props.onIdSubmit(id);
+                nav.push('/');
+            } else {
+                alert('Please enter an existing user id');
+            }
+        });
     };
 
     const createNewId = () => {
