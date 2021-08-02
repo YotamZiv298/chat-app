@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Contact } from 'src/contacts/contact.model';
 
 import { User } from './user.model';
 
@@ -18,11 +19,31 @@ export class UsersService {
         return { ...user };
     }
 
+    getContact(id: string, contactId: string) {
+        const [user, index] = this.findUser(id);
+
+        const contact = user.contacts.find(
+            (contact) => contact.id === contactId
+        );
+
+        return { ...contact };
+    }
+
+    getContacts(id: string) {
+        const [user, index] = this.findUser(id);
+
+        return [...user.contacts];
+    }
+
     getUsers(): User[] {
         return [...this.users];
     }
 
-    updateUser(id: string, chat: any, contact: { id: string; name: string }) {
+    updateUser(
+        id: string,
+        chat: { recipients: any; messages: any[] },
+        contact: { id: string; name: string }
+    ) {
         const [user, index] = this.findUser(id);
         const updatedUser = { ...user };
 
