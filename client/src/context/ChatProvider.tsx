@@ -16,7 +16,8 @@ type ChatsProviderProps = {
 };
 
 const ChatsProvider = (props: ChatsProviderProps) => {
-    const [chats, setChats] = useLocalStorage('chats', [] as any);
+    // const [chats, setChats] = useLocalStorage('chats', [] as any);
+    const [chats, setChats] = useState<any>([]);
     const [selectedChatIndex, setSelectedChatIndex] = useState(0);
     const { contacts } = useContacts();
     const socket = useSocket();
