@@ -14,10 +14,10 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
     @Post()
-    addUser(@Body('nickname') nickname: string) {
-        const generatedId = this.usersService.addUser(nickname);
+    addUser(@Body('id') id: string) {
+        this.usersService.addUser(id);
 
-        return { id: generatedId };
+        return { id: id };
     }
 
     @Get(':id')
@@ -31,15 +31,19 @@ export class UsersController {
     }
 
     @Patch(':id')
-    updateUser(@Param('id') id: string, @Body('nickname') nickname: string) {
-        this.usersService.updateUser(id, nickname);
+    updateUser(
+        @Param('id') id: string,
+        @Body('chat') chat: any,
+        @Body('contact') contact: { id: string; name: string }
+    ) {
+        this.usersService.updateUser(id, chat, contact);
 
         return null;
     }
 
     @Delete(':id')
-    removeUser(@Param('id') prodId: string) {
-        this.usersService.deleteUser(prodId);
+    removeUser(@Param('id') userId: string) {
+        this.usersService.deleteUser(userId);
 
         return null;
     }

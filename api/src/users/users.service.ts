@@ -6,13 +6,10 @@ import { User } from './user.model';
 export class UsersService {
     private users: User[] = [];
 
-    addUser(nickname: string): string {
-        const id = Math.random().toString();
-        const newUser = new User(id, nickname);
+    addUser(id: string): void {
+        const newUser = new User(id, [], []);
 
         this.users.push(newUser);
-
-        return id;
     }
 
     getUser(id: string): User {
@@ -25,12 +22,15 @@ export class UsersService {
         return [...this.users];
     }
 
-    updateUser(id: string, nickname: string) {
+    updateUser(id: string, chat: any, contact: { id: string; name: string }) {
         const [user, index] = this.findUser(id);
         const updatedUser = { ...user };
 
-        if (nickname) {
-            updatedUser.nickname = nickname;
+        if (chat) {
+            updatedUser.chats = [...user.chats, chat];
+        }
+        if (contact) {
+            updatedUser.contacts = [...user.contacts, contact];
         }
 
         this.users[index] = updatedUser;
@@ -42,7 +42,7 @@ export class UsersService {
     }
 
     private findUser(id: string): [User, number] {
-        const index = this.users.findIndex((prod) => prod.id === id);
+        const index = this.users.findIndex((user) => user.id === id);
         const user = this.users[index];
 
         if (!user) {
