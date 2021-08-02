@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import './App.css';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -10,13 +12,14 @@ import { ChatsProvider } from './context/ChatProvider';
 
 const App = () => {
     // const [isAuth, setIsAuth] = useState(false);
-    const [id, setId] = useLocalStorage('id', [] as any);
+    // const [id, setId] = useLocalStorage('id', [] as any);
+    const [id, setId] = useState('');
 
     const home = (
         <SocketProvider id={id}>
-            <ContactsProvider>
+            <ContactsProvider id={id}>
                 <ChatsProvider id={id}>
-                    <Home id={id} />
+                    <Home id={id} setId={setId} />
                 </ChatsProvider>
             </ContactsProvider>
         </SocketProvider>
@@ -30,7 +33,11 @@ const App = () => {
                     <Route
                         exact
                         path='/login'
-                        component={() => <Login onIdSubmit={setId} />}
+                        component={() => (
+                            <SocketProvider id={id}>
+                                <Login onIdSubmit={setId} />
+                            </SocketProvider>
+                        )}
                     />
                 </Switch>
             </div>
