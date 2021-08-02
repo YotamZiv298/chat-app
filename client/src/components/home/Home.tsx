@@ -10,14 +10,27 @@ import { useChats } from '../../context/ChatProvider';
 
 type HomeProps = {
     id: string;
+    setId: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const Home = (props: HomeProps) => {
     const { selectedChat } = useChats();
 
-    if (!props.id || !props.id.length) return <Redirect to='/login' />;
+    if (!props.id || !props.id.length) {
+        return <Redirect to='/login' />;
+    }
 
     // const location = useLocation<any>();
+
+    const logout = async () => {
+        const reqOptions = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+        };
+        await fetch(`http://localhost:5000/users/${props.id}`, reqOptions);
+        props.setId('');
+        window.location.reload();
+    };
 
     return (
         <React.Fragment>
@@ -33,13 +46,7 @@ const Home = (props: HomeProps) => {
                                 {/* Hello, {location.state.nickname} */}
                                 {props.id}
                             </h4>
-                            <Button
-                                variant='danger'
-                                onClick={() => {
-                                    localStorage.clear();
-                                    window.location.reload();
-                                }}
-                            >
+                            <Button variant='danger' onClick={() => logout()}>
                                 Logout
                             </Button>{' '}
                         </div>

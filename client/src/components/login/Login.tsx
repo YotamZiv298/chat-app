@@ -19,47 +19,39 @@ const Login = (props: LoginProps) => {
 
     let nav = useHistory();
 
-    const handleSubmit = async (e: any) => {
+    const sendToApi = async (id: string | undefined) => {
+        const reqOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: id }),
+        };
+        await fetch('http://localhost:5000/users', reqOptions)
+            .then((res) => res.json())
+            .then((data) => console.log(`user created : ${data.id}`));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        sendToApi(idRef.current?.value);
         props.onIdSubmit(idRef.current?.value);
         nav.push('/');
-        // const re = /^\S*$/;
-        // if (formNickname.length >= 4 && re.test(formNickname)) {
-        //     await fetch('http://localhost:5000/users', {
-        //         method: 'POST',
-        //         headers: {
-        //             Accept: 'application/json',
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify({
-        //             nickname: formNickname,
-        //         }),
-        //     })
-        //         .then((res) => res.json())
-        //         .then((data) => {
-        //             console.log(data);
-        //         });
-
-        //     props.setIsAuth(true);
-        //     nav.push('/', { nickname: formNickname });
-        // } else {
-        //     alert('Please enter valid nickname');
-        // }
     };
+
     const createNewId = () => {
-        props.onIdSubmit(
-            'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
-                /[xy]/g,
-                function (c) {
-                    var r = (Math.random() * 16) | 0,
-                        v = c === 'x' ? r : (r & 0x3) | 0x8;
-                    return v.toString(16);
-                }
-            )
+        const id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+            /[xy]/g,
+            function (c) {
+                var r = (Math.random() * 16) | 0,
+                    v = c === 'x' ? r : (r & 0x3) | 0x8;
+                return v.toString(16);
+            }
         );
+        sendToApi(id);
+        props.onIdSubmit(id);
         nav.push('/');
     };
+
     return (
         <React.Fragment>
             <Container fluid>
