@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import { Button, Form, InputGroup } from 'react-bootstrap';
+import { Button, Form, InputGroup, Modal } from 'react-bootstrap';
 import { useChats } from '../../context/ChatProvider';
+import AddUserModal from '../modals/AddUserModal';
+import RemoveUserModal from '../modals/RemoveUserModal';
 
 import './Chat.css';
 // type ChatProps = {
@@ -16,6 +18,12 @@ const Chat = () => {
         if (node) node.scrollIntoView({ smooth: true });
     }, []);
     const { sendMessage, selectedChat } = useChats();
+    const [modalOpen, setModalOpen] = useState(false);
+    const [addButton, setAddButton] = useState(false);
+
+    const closeModal = () => {
+        setModalOpen(false);
+    };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -130,6 +138,37 @@ const Chat = () => {
     return (
         <React.Fragment>
             <div className='chat-container d-flex flex-column flex-grow-1'>
+                <div>
+                    <Button
+                        variant='success'
+                        // style={{ height: '75px' }}
+                        type='button'
+                        onClick={() => {
+                            setAddButton(true);
+                            setModalOpen(true);
+                        }}
+                    >
+                        {'Add user'}
+                    </Button>
+                    <Button
+                        variant='warning'
+                        // style={{ height: '75px' }}
+                        type='button'
+                        onClick={() => {
+                            setAddButton(false);
+                            setModalOpen(true);
+                        }}
+                    >
+                        {'Remove user'}
+                    </Button>
+                    <Modal show={modalOpen} onHide={closeModal}>
+                        {addButton ? (
+                            <AddUserModal closeModal={closeModal} />
+                        ) : (
+                            <RemoveUserModal closeModal={closeModal} />
+                        )}
+                    </Modal>
+                </div>
                 <div className='flex-grow-1 overflow-auto'>
                     <div className='d-flex flex-column align-items-start justify-content-end px-3'>
                         {selectedChat.messages.map(
