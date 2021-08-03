@@ -20,9 +20,9 @@ const ChatList = (props: ChatListProps) => {
     const [modalOpen, setModalOpen] = useState(false);
     const chatsOpen = activeKey === CHATS_KEY;
 
-    function closeModal() {
+    const closeModal = () => {
         setModalOpen(false);
-    }
+    };
 
     // const [showNewChat, setShowNewChat] = useState(false);
     // const [nicknameInput, setNicknameInput] = useState('');
