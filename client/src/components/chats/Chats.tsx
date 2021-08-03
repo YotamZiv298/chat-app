@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ListGroup } from 'react-bootstrap';
 import { useChats } from '../../context/ChatProvider';
 
 const Chats = () => {
     const { chats, selectChatIndex } = useChats();
+    const { fetchChats } = useChats();
+
+    useEffect(() => {
+        fetchChats();
+    }, []);
 
     return (
         <React.Fragment>
@@ -18,7 +23,9 @@ const Chats = () => {
                             // style={{ backgroundColor: '#2a2f32' }}
                         >
                             {chat.recipients
-                                .map((r: { name: any }) => r.name)
+                                .map(
+                                    (r: { id: string; name: string }) => r.name
+                                )
                                 .join(', ')}
                         </ListGroup.Item>
                     ))}
