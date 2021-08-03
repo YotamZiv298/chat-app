@@ -1,6 +1,5 @@
 import React from 'react';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import useLocalStorage from '../hooks/useLocalStorage';
 import { useContacts } from './ContactsProvider';
 import { useSocket } from './SocketProvider';
 
@@ -22,6 +21,22 @@ const ChatsProvider = (props: ChatsProviderProps) => {
     const { contacts } = useContacts();
     const socket = useSocket();
 
+    const addToChats = (chats: any[]) => {
+        setChats((prevChats: any[]) => {
+            return [...prevChats, ...chats];
+        });
+    };
+
+    const fetchChats: any = async () => {
+        await fetch(`http://localhost:5000/users/${props.id}/chats`)
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.length) {
+                    addToChats(data);
+                }
+            });
+    };
+
     const createChat = async (recipients: any) => {
         const newChat = { recipients, messages: [] };
         const reqOptions = {
@@ -34,9 +49,7 @@ const ChatsProvider = (props: ChatsProviderProps) => {
         };
         await fetch(`http://localhost:5000/users/${props.id}`, reqOptions);
 
-        setChats((prevChats: any) => {
-            return [...prevChats, newChat];
-        });
+        addToChats([newChat]);
     };
 
     const addMessageToChat = useCallback(
@@ -120,6 +133,7 @@ const ChatsProvider = (props: ChatsProviderProps) => {
         sendMessage,
         selectChatIndex: setSelectedChatIndex,
         createChat,
+        fetchChats,
     };
 
     return (
