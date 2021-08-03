@@ -3,12 +3,14 @@ import { ListGroup } from 'react-bootstrap';
 import { useChats } from '../../context/ChatProvider';
 
 const Chats = () => {
-    const { chats, selectChatIndex } = useChats();
+    const { chats, selectChatIndex,selectedChat } = useChats();
     const { fetchChats } = useChats();
 
     useEffect(() => {
         fetchChats();
     }, []);
+
+    useEffect(() => {}, [selectedChat]);
 
     return (
         <React.Fragment>
