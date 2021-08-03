@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ type LoginProps = {
 
 const Login = (props: LoginProps) => {
     const idRef = useRef<HTMLInputElement>(null);
-    const [formNickname, setFormNickname] = useState('');
+    // const [formNickname, setFormNickname] = useState('');
 
     let nav = useHistory();
 
@@ -67,25 +67,27 @@ const Login = (props: LoginProps) => {
                     <Col md={{ span: 4, offset: 4 }}>
                         <div className='login-container'>
                             <Form onSubmit={handleSubmit}>
+                                <h5 style={{ color: 'white' }}>Login</h5>
                                 <Form.Control
                                     type='text'
                                     size='lg'
                                     autoFocus
-                                    placeholder='Enter nickname'
-                                    value={formNickname}
-                                    onChange={(e) => {
-                                        setFormNickname(e.target.value);
-                                    }}
+                                    placeholder='Enter existing id'
+                                    // value={formNickname}
+                                    // onChange={(e) => {
+                                    //     setFormNickname(e.target.value);
+                                    // }}
                                     ref={idRef}
                                     required
                                 />
-                                <br />
+                                {/* <br /> */}
                                 <Button
                                     type='submit'
                                     className='login-submit-button'
                                 >
                                     Start Chatting
                                 </Button>
+                                <h5 style={{ color: 'white' }}>or . . .</h5>
                                 <Button
                                     onClick={createNewId}
                                     variant='secondary'
