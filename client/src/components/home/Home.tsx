@@ -14,7 +14,7 @@ type HomeProps = {
 };
 
 const Home = (props: HomeProps) => {
-    const { selectedChat } = useChats();
+    const { chats, selectedChat, updateChats } = useChats();
 
     if (!props.id || !props.id.length) {
         return <Redirect to='/login' />;
@@ -22,12 +22,13 @@ const Home = (props: HomeProps) => {
 
     // const location = useLocation<any>();
 
-    const logout = async () => {
+    const logout = () => {
         // const reqOptions = {
         //     method: 'DELETE',
         //     headers: { 'Content-Type': 'application/json' },
         // };
         // await fetch(`http://localhost:5000/users/${props.id}`, reqOptions);
+        updateChats();
         props.setId('');
         // window.location.reload();
     };
