@@ -5,7 +5,6 @@ import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './components/home/Home';
 import Login from './components/login/Login';
-import useLocalStorage from './hooks/useLocalStorage';
 import { SocketProvider } from './context/SocketProvider';
 import { ContactsProvider } from './context/ContactsProvider';
 import { ChatsProvider } from './context/ChatProvider';
