@@ -21,6 +21,19 @@ const ChatsProvider = (props: ChatsProviderProps) => {
     const { contacts } = useContacts();
     const socket = useSocket();
 
+    const updateChats = () => {
+        chats.map(async (chat: any) => {
+            await fetch(`http://localhost:5000/users/${props.id}`, {
+                method: 'PATCH',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify({
+                    chat: chat,
+                    contact: undefined,
+                }),
+            });
+        });
+    };
+
     const addToChats = (chats: any[]) => {
         setChats((prevChats: any[]) => {
             return [...prevChats, ...chats];
@@ -39,15 +52,15 @@ const ChatsProvider = (props: ChatsProviderProps) => {
 
     const createChat = async (recipients: any) => {
         const newChat = { recipients, messages: [] };
-        const reqOptions = {
-            method: 'PATCH',
-            headers: { 'Content-type': 'application/json' },
-            body: JSON.stringify({
-                chat: newChat,
-                contact: undefined,
-            }),
-        };
-        await fetch(`http://localhost:5000/users/${props.id}`, reqOptions);
+        // const reqOptions = {
+        //     method: 'PATCH',
+        //     headers: { 'Content-type': 'application/json' },
+        //     body: JSON.stringify({
+        //         chat: newChat,
+        //         contact: undefined,
+        //     }),
+        // };
+        // await fetch(`http://localhost:5000/users/${props.id}`, reqOptions);
 
         addToChats([newChat]);
     };
@@ -134,6 +147,7 @@ const ChatsProvider = (props: ChatsProviderProps) => {
         selectChatIndex: setSelectedChatIndex,
         createChat,
         fetchChats,
+        updateChats,
     };
 
     return (
