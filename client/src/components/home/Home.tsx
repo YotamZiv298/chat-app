@@ -23,13 +23,13 @@ const Home = (props: HomeProps) => {
     // const location = useLocation<any>();
 
     const logout = async () => {
-        const reqOptions = {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-        };
-        await fetch(`http://localhost:5000/users/${props.id}`, reqOptions);
+        // const reqOptions = {
+        //     method: 'DELETE',
+        //     headers: { 'Content-Type': 'application/json' },
+        // };
+        // await fetch(`http://localhost:5000/users/${props.id}`, reqOptions);
         props.setId('');
-        window.location.reload();
+        // window.location.reload();
     };
 
     return (
