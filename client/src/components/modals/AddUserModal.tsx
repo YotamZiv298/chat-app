@@ -29,17 +29,13 @@ const AddUserModal = (props: AddUserModalProps) => {
             return;
         }
         selectedContactIds.map((rId: string) => {
-            selectedChat.recipients.push({
-            // chats
-            //     .find((chat: any) => chat.selected === true)
-            //     .recipients.push({
-                    id: rId,
-                    name: contacts.find((contact: any) => contact.id === rId)
-                        .name,
-                });
-            // chats.find((chat:any)=>chat.selected===true).recipients
+            chats[
+                chats.findIndex((chat: any) => chat.selected === true)
+            ].recipients.push({
+                id: rId,
+                name: contacts.find((contact: any) => contact.id === rId).name,
+            });
         });
-        // createChat(selectedContactIds);
         props.closeModal();
     };
 
