@@ -35,6 +35,21 @@ export class UsersService {
         return [...user.contacts];
     }
 
+    // getChat(id: string, chatId: string) {
+    //     const [user, index] = this.findUser(id);
+
+    //     const chat = user.chats.find((chat) =>
+    //     chat.id === chatId);
+
+    //     return { ...chat };
+    // }
+
+    getChats(id: string) {
+        const [user, index] = this.findUser(id);
+
+        return [...user.chats];
+    }
+
     getUsers(): User[] {
         return [...this.users];
     }
