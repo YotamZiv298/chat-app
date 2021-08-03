@@ -87,7 +87,7 @@ const Login = (props: LoginProps) => {
                                 >
                                     Start Chatting
                                 </Button>
-                                <h5 style={{ color: 'white' }}>or . . .</h5>
+                                <h5 style={{ color: 'white' }}>or</h5>
                                 <Button
                                     onClick={createNewId}
                                     variant='secondary'
