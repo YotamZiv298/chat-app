@@ -10,13 +10,34 @@ type NewChatModalProps = {
 const NewChatModal = (props: NewChatModalProps) => {
     const [selectedContactIds, setSelectedContactIds] = useState<any>([]);
     const { contacts } = useContacts();
-    const { createChat } = useChats();
+    const { createChat, chats } = useChats();
+
+    // check this not working after adding to group
+    const isChatExist = () => {
+        let flag = false;
+        chats.forEach((chat: any) => {
+            let count = 0;
+            chat.recipients.forEach((recipient: any) => {
+                count = selectedContactIds.includes(recipient.id)
+                    ? count + 1
+                    : count;
+            });
+            if (!flag) {
+                flag = selectedContactIds.length === count;
+            }
+        });
+        return flag;
+    };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!selectedContactIds.length) {
             alert('Add contacts to create a chat');
+            return;
+        }
+        if (chats.length && isChatExist()) {
+            alert('Chat already exists');
             return;
         }
         createChat(selectedContactIds);
