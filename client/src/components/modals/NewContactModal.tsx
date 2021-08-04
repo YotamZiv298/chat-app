@@ -11,11 +11,23 @@ const NewContactModal = (props: NewContactModalProps) => {
     const nameRef = useRef<HTMLInputElement>(null);
     const { createContact } = useContacts();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        createContact(idRef.current?.value, nameRef.current?.value);
-        props.closeModal();
+        const id = idRef.current?.value;
+        const name = nameRef.current?.value;
+
+        await fetch(`http://localhost:5000/users/${id}`).then((res) => {
+            if (res.ok) {
+                createContact(id, name);
+                props.closeModal();
+            } else {
+                alert('Please enter an existing user id');
+            }
+        });
+        // for quick adding
+        // createContact(id, name);
+        // props.closeModal();
     };
 
     return (
