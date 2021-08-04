@@ -34,9 +34,42 @@ const ChatsProvider = (props: ChatsProviderProps) => {
         });
     };
 
-    const addToChats = (chats: any[]) => {
-        setChats((prevChats: any[]) => {
-            return [...prevChats, ...chats];
+    const addToChats = (newChats: any[]) => {
+        newChats.forEach((newChat) => {
+            if (
+                chats.find(
+                    (c: any) =>
+                        JSON.stringify(c.recipients) ===
+                        JSON.stringify(
+                            newChat.recipients.slice(
+                                0,
+                                newChat.recipients.indexOf(0)
+                            )
+                        )
+                )
+            ) {
+                let chatsCopy = [...chats];
+
+                const index = chats.findIndex(
+                    (c: any) =>
+                        JSON.stringify(c.recipients) ===
+                        JSON.stringify(
+                            newChat.recipients.slice(
+                                0,
+                                newChat.recipients.indexOf(0)
+                            )
+                        )
+                );
+                newChat.recipients = newChat.recipients.filter((r: any) => {
+                    return r !== 0;
+                });
+                chatsCopy[index] = newChat;
+                setChats(chatsCopy);
+            } else {
+                setChats((prevChats: any[]) => {
+                    return [...prevChats, newChat];
+                });
+            }
         });
     };
 
