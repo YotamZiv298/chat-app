@@ -15,13 +15,12 @@ type ChatsProviderProps = {
 };
 
 const ChatsProvider = (props: ChatsProviderProps) => {
-    // const [chats, setChats] = useLocalStorage('chats', [] as any);
     const [chats, setChats] = useState<any>([]);
     const [selectedChatIndex, setSelectedChatIndex] = useState(0);
     const { contacts } = useContacts();
     const socket = useSocket();
 
-    const updateChats = () => {
+    const updateChatsApi = () => {
         chats.map(async (chat: any) => {
             await fetch(`http://localhost:5000/users/${props.id}`, {
                 method: 'PATCH',
@@ -35,8 +34,33 @@ const ChatsProvider = (props: ChatsProviderProps) => {
     };
 
     const addToChats = (newChats: any[]) => {
-        newChats.forEach((newChat) => {
+        setChats((prevChats: any[]) => {
+            return [...prevChats, ...newChats];
+        });
+    };
+
+    const fetchChats = async () => {
+        await fetch(`http://localhost:5000/users/${props.id}/chats`)
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.length) {
+                    addToChats(data);
+                }
+            });
+    };
+
+    const createChat = async (recipients: any) => {
+        const newChat = { recipients, messages: [] };
+
+        addToChats([newChat]);
+    };
+
+    const updateChatRecipients = (recipients: any[]) => {
+        const newChat = { recipients, messages: [] };
+
+        [newChat].forEach((newChat: any) => {
             if (
+                chats.length &&
                 chats.find(
                     (c: any) =>
                         JSON.stringify(c.recipients) ===
@@ -65,37 +89,8 @@ const ChatsProvider = (props: ChatsProviderProps) => {
                 });
                 chatsCopy[index] = newChat;
                 setChats(chatsCopy);
-            } else {
-                setChats((prevChats: any[]) => {
-                    return [...prevChats, newChat];
-                });
             }
         });
-    };
-
-    const fetchChats: any = async () => {
-        await fetch(`http://localhost:5000/users/${props.id}/chats`)
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.length) {
-                    addToChats(data);
-                }
-            });
-    };
-
-    const createChat = async (recipients: any) => {
-        const newChat = { recipients, messages: [] };
-        // const reqOptions = {
-        //     method: 'PATCH',
-        //     headers: { 'Content-type': 'application/json' },
-        //     body: JSON.stringify({
-        //         chat: newChat,
-        //         contact: undefined,
-        //     }),
-        // };
-        // await fetch(`http://localhost:5000/users/${props.id}`, reqOptions);
-
-        addToChats([newChat]);
     };
 
     const addMessageToChat = useCallback(
@@ -179,8 +174,9 @@ const ChatsProvider = (props: ChatsProviderProps) => {
         sendMessage,
         selectChatIndex: setSelectedChatIndex,
         createChat,
+        updateChatRecipients,
         fetchChats,
-        updateChats,
+        updateChatsApi,
     };
 
     return (
