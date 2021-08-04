@@ -63,7 +63,23 @@ export class UsersService {
         const updatedUser = { ...user };
 
         if (chat) {
-            updatedUser.chats = [...user.chats, chat];
+            if (
+                user.chats.find(
+                    (c) =>
+                        JSON.stringify(c.recipients) ===
+                        JSON.stringify(chat.recipients)
+                )
+            ) {
+                user.chats[
+                    user.chats.findIndex(
+                        (c) =>
+                            JSON.stringify(c.recipients) ===
+                            JSON.stringify(chat.recipients)
+                    )
+                ] = chat;
+            } else {
+                updatedUser.chats = [...user.chats, chat];
+            }
         }
         if (contact) {
             updatedUser.contacts = [...user.contacts, contact];
