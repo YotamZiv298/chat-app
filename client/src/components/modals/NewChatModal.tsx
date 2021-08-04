@@ -12,18 +12,24 @@ const NewChatModal = (props: NewChatModalProps) => {
     const { contacts } = useContacts();
     const { createChat, chats } = useChats();
 
-    // check this not working after adding to group
     const isChatExist = () => {
         let flag = false;
         chats.forEach((chat: any) => {
             let count = 0;
-            chat.recipients.forEach((recipient: any) => {
-                count = selectedContactIds.includes(recipient.id)
-                    ? count + 1
-                    : count;
+            const [bigArr, smallArr] =
+                chat.recipients.length >= selectedContactIds.length
+                    ? (() => {
+                          return [chat.recipients, selectedContactIds];
+                      })()
+                    : (() => {
+                          return [selectedContactIds, chat.recipients];
+                      })();
+
+            bigArr.forEach((recipient: any) => {
+                count = smallArr.includes(recipient.id) ? count + 1 : count;
             });
             if (!flag) {
-                flag = selectedContactIds.length === count;
+                flag = bigArr.length === count;
             }
         });
         return flag;
