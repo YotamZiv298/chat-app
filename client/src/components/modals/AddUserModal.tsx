@@ -11,13 +11,13 @@ const AddUserModal = (props: AddUserModalProps) => {
     const [selectedContactIds, setSelectedContactIds] = useState<any>([]);
     const { contacts } = useContacts();
     const { selectedChat } = useChats();
-    const { chats } = useChats();
+    const { chats, createChat } = useChats();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!selectedContactIds.length) {
-            alert('Add contacts to create a chat');
+            alert('Please select contacts to add');
             return;
         }
         if (
@@ -28,14 +28,21 @@ const AddUserModal = (props: AddUserModalProps) => {
             alert('Contact already in chat');
             return;
         }
-        selectedContactIds.map((rId: string) => {
-            chats[
-                chats.findIndex((chat: any) => chat.selected === true)
-            ].recipients.push({
-                id: rId,
-                name: contacts.find((contact: any) => contact.id === rId).name,
-            });
-        });
+        createChat([
+            ...selectedChat.recipients.map((r: any) => {
+                return r.id;
+            }),
+            0,
+            ...selectedContactIds,
+        ]);
+        // selectedContactIds.map((rId: string) => {
+        //     chats[
+        //         chats.findIndex((chat: any) => chat.selected === true)
+        //     ].recipients.push({
+        //         id: rId,
+        //         name: contacts.find((contact: any) => contact.id === rId).name,
+        //     });
+        // });
         props.closeModal();
     };
 
