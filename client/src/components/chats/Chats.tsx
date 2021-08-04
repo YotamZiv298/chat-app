@@ -20,7 +20,6 @@ const Chats = () => {
                             action
                             onClick={() => selectChatIndex(index)}
                             active={chat.selected}
-                            // style={{ backgroundColor: '#2a2f32' }}
                         >
                             {chat.recipients
                                 .map(

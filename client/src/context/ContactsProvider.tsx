@@ -13,7 +13,6 @@ type ContactsProviderProps = {
 };
 
 const ContactsProvider = (props: ContactsProviderProps) => {
-    // const [contacts, setContacts] = useLocalStorage('contacts', [] as any);
     const [contacts, setContacts] = useState<any>([]);
 
     const addToContacts = (contacts: any[]) => {

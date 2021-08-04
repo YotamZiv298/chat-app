@@ -7,9 +7,6 @@ import { ChatGateway } from './chat/chat.gateway';
 import { UsersModule } from './users/users.module';
 
 @Module({
-    // imports: [UsersModule],
-    // controllers: [AppController],
-    // providers: [AppService, AppGateway],
     imports: [UsersModule],
     controllers: [],
     providers: [ChatGateway, AppGateway],

@@ -5,12 +5,6 @@ import AddUserModal from '../modals/AddUserModal';
 import RemoveUserModal from '../modals/RemoveUserModal';
 
 import './Chat.css';
-// type ChatProps = {
-// messages: {
-//     self: any[];
-//     user: any[];
-// };
-// };
 
 const Chat = () => {
     const [text, setText] = useState('');
@@ -35,113 +29,12 @@ const Chat = () => {
         setText('');
     };
 
-    // const [allMessages, setAllMessages] = useState([
-    //     ...props.messages.self,
-    //     ...props.messages.user,
-    // ]);
-
-    // const [selfMessages, setSelfMessages] = useState(props.messages.self);
-    // const [userMessages, setUserMessages] = useState(props.messages.user);
-
-    // const [message, setMessage] = useState('');
-
-    // const addSelfMessage = (msgText: string) => {
-    //     let user = { nickname: 'self' };
-    //     let value = msgText;
-    //     let date = new Date();
-    //     let timeNow = date.getHours() + ':' + date.getMinutes();
-
-    //     let msg = <Message user={user} value={value} date={timeNow} />;
-
-    //     // fetch('http://localhost:5000/users', {
-    //     //     method: 'POST',
-    //     //     headers: {
-    //     //         'Accept': 'application/json',
-    //     //         'Content-Type': 'application/json',
-    //     //     },
-    //     //     body: JSON.stringify({
-    //     //         message: {
-    //     //             'user': user,
-    //     //             'value': value,
-    //     //             'date': timeNow
-    //     //         }
-    //     //     })
-    //     // }).then(res => res.json())
-    //     //     .then(data => {
-    //     //         console.log(data);
-    //     //     });
-
-    //     setSelfMessages((prev) => [...prev, msg]);
-    //     setAllMessages((prev) => [...prev, msg]);
-    // };
-
-    // const sendMessage = (recipients, text: string) => {
-    //     // console.log(`send: ${msg}`);
-    //     // socket.emit('msgToServer', msg);
-
-    //     socket.emit('send-message', { recipients, text });
-    //     // addMessage({ recipients, text, sender: id });
-    // };
-
-    // const receiveMessage = (msg: string) => {
-    //     console.log(`recv: ${msg}`);
-    //     addSelfMessage(msg);
-    // };
-
-    // const displayMessages = () => {
-    //     if (selfMessages.length || userMessages.length) {
-    //         // setSelfMessages(prev => [...prev,
-
-    //         // ]);
-
-    //         // setMessages((prev) => ({
-    //         //     ...prev,
-    //         //     self: props.messages.self,
-    //         //     user: props.messages.user
-    //         // }));
-
-    //         return allMessages.map((msg, index) => (
-    //             <Row>
-    //                 <Col key={index}>
-    //                     {msg}
-    //                     <br />
-    //                 </Col>
-    //             </Row>
-    //         ));
-    //     } else {
-    //         return (
-    //             <Row>
-    //                 <Col>
-    //                     <h5 style={{ color: 'white' }}>No messages yet</h5>
-    //                 </Col>
-    //             </Row>
-    //         );
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     socket.on('msgToClient', (msg) => {
-    //         receiveMessage(msg);
-    //     });
-    // }, []);
-
-    // const handleSubmit = (e: any) => {
-    // e.preventDefault();
-    //
-    // if (message) {
-    // sendMessage(message);
-    // addSelfMessage(message);
-    // }
-    // setMessage('');
-    // };
-
     return (
         <React.Fragment>
             <div className='chat-container d-flex flex-column flex-grow-1'>
                 <div>
                     <Button
                         variant='success'
-                        // style={{ height: '75px' }}
                         type='button'
                         onClick={() => {
                             setAddButton(true);
@@ -152,7 +45,6 @@ const Chat = () => {
                     </Button>
                     <Button
                         variant='warning'
-                        // style={{ height: '75px' }}
                         type='button'
                         onClick={() => {
                             setAddButton(false);
@@ -222,18 +114,13 @@ const Chat = () => {
                         <InputGroup>
                             <Form.Control
                                 autoFocus
-                                // as='textarea'
                                 required
                                 value={text}
                                 onChange={(e) => setText(e.target.value)}
-                                style={{ /*height: '75px',*/ resize: 'none' }}
+                                style={{ resize: 'none' }}
                             />
                             <InputGroup.Append>
-                                <Button
-                                    variant='success'
-                                    // style={{ height: '75px' }}
-                                    type='submit'
-                                >
+                                <Button variant='success' type='submit'>
                                     <b>{'>'}</b>
                                 </Button>
                             </InputGroup.Append>
@@ -241,39 +128,6 @@ const Chat = () => {
                     </Form.Group>
                 </Form>
             </div>
-
-            {/* <div className='chat-container'>
-                <Container fluid>
-                    {displayMessages()}
-                    <Row>
-                        <Col>
-                            <Form
-                                onSubmit={handleSubmit}
-                                style={{ display: 'flex' }}
-                            >
-                                <Form.Control
-                                    autoFocus
-                                    placeholder='Type a message'
-                                    value={message}
-                                    onChange={(e) => {
-                                        setMessage(e.target.value);
-                                    }}
-                                    as='textarea'
-                                    rows={2}
-                                    style={{ resize: 'none' }}
-                                />
-                                <Button
-                                    variant='success'
-                                    type='submit'
-                                    className='login-submit-button'
-                                >
-                                    <b>{'>'}</b>
-                                </Button>
-                            </Form>
-                        </Col>
-                    </Row>
-                </Container>
-            </div> */}
         </React.Fragment>
     );
 };

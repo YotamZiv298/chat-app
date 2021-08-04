@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useChats } from '../../context/ChatProvider';
 import { useContacts } from '../../context/ContactsProvider';
@@ -11,7 +11,6 @@ const RemoveUserModal = (props: RemoveUserModalProps) => {
     const [selectedContactIds, setSelectedContactIds] = useState<any>([]);
     const { contacts } = useContacts();
     const { selectedChat } = useChats();
-    const { chats, createChat } = useChats();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -32,13 +31,6 @@ const RemoveUserModal = (props: RemoveUserModalProps) => {
             alert('Can not remove all contacts');
             return;
         }
-        // createChat([
-        //     ...selectedChat.recipients.map((r: any) => {
-        //         return r.id;
-        //     }),
-        //     0,
-        //     ...selectedContactIds,
-        // ]);
         props.closeModal();
     };
 

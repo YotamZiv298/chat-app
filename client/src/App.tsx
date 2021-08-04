@@ -10,8 +10,6 @@ import { ContactsProvider } from './context/ContactsProvider';
 import { ChatsProvider } from './context/ChatProvider';
 
 const App = () => {
-    // const [isAuth, setIsAuth] = useState(false);
-    // const [id, setId] = useLocalStorage('id', [] as any);
     const [id, setId] = useState('');
 
     const home = (
@@ -41,22 +39,6 @@ const App = () => {
                 </Switch>
             </div>
         </Router>
-        // <Router>
-        //     <div className='App'>
-        //         <PrivateRoute exact path='/' component={Home} isAuth={isAuth} />
-        //         <Route
-        //             exact
-        //             path='/login'
-        //             component={() => (
-        //                 <Login
-        //                     isAuth={isAuth}
-        //                     setIsAuth={setIsAuth}
-        //                     onIdSubmit={setId}
-        //                 />
-        //             )}
-        //         />
-        //     </div>
-        // </Router>
     );
 };
 

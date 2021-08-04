@@ -4,18 +4,12 @@ import { useHistory } from 'react-router-dom';
 
 import './Login.css';
 
-// type LoginProps = {
-//     isAuth: boolean;
-//     setIsAuth: any;
-//     onIdSubmit: any;
-// };
 type LoginProps = {
     onIdSubmit: any;
 };
 
 const Login = (props: LoginProps) => {
     const idRef = useRef<HTMLInputElement>(null);
-    // const [formNickname, setFormNickname] = useState('');
 
     let nav = useHistory();
 
@@ -73,14 +67,9 @@ const Login = (props: LoginProps) => {
                                     size='lg'
                                     autoFocus
                                     placeholder='Enter existing id'
-                                    // value={formNickname}
-                                    // onChange={(e) => {
-                                    //     setFormNickname(e.target.value);
-                                    // }}
                                     ref={idRef}
                                     required
                                 />
-                                {/* <br /> */}
                                 <Button
                                     type='submit'
                                     className='login-submit-button'

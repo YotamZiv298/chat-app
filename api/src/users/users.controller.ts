@@ -35,11 +35,6 @@ export class UsersController {
         return this.usersService.getContacts(id);
     }
 
-    // @Get(':id/chats/:chatId')
-    // getChat(@Param('id') id: string, @Param('chatId') chatId: string) {
-    //     return this.usersService.getChat(id, chatId);
-    // }
-
     @Get(':id/chats')
     getChats(@Param('id') id: string) {
         return this.usersService.getChats(id);
