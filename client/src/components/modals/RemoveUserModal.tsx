@@ -11,24 +11,34 @@ const RemoveUserModal = (props: RemoveUserModalProps) => {
     const [selectedContactIds, setSelectedContactIds] = useState<any>([]);
     const { contacts } = useContacts();
     const { selectedChat } = useChats();
+    const { chats, createChat } = useChats();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!selectedContactIds.length) {
-            alert('Remove contacts to create a chat');
+            alert('Please select contacts to remove');
             return;
         }
         if (
-            selectedChat.recipients.some((r: any) =>
+            !selectedChat.recipients.some((r: any) =>
                 selectedContactIds.includes(r.id)
             )
         ) {
-            alert('Contact already in chat');
+            alert('Contact is not in chat');
             return;
         }
-
-        // createChat(selectedContactIds);
+        if (selectedContactIds.length === selectedChat.recipients.length) {
+            alert('Can not remove all contacts');
+            return;
+        }
+        // createChat([
+        //     ...selectedChat.recipients.map((r: any) => {
+        //         return r.id;
+        //     }),
+        //     0,
+        //     ...selectedContactIds,
+        // ]);
         props.closeModal();
     };
 
@@ -61,7 +71,9 @@ const RemoveUserModal = (props: RemoveUserModalProps) => {
                             />
                         </Form.Group>
                     ))}
-                    <Button variant='danger' type='submit'>Remove</Button>
+                    <Button variant='danger' type='submit'>
+                        Remove
+                    </Button>
                 </Form>
             </Modal.Body>
         </React.Fragment>
