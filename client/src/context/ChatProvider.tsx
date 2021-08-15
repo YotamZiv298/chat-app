@@ -55,8 +55,13 @@ const ChatsProvider = (props: ChatsProviderProps) => {
         addToChats([newChat]);
     };
 
-    const updateChatRecipients = (recipients: any[]) => {
-        const newChat = { recipients, messages: [] };
+    const updateType = (newChat: any, recipients: any[], type: number) => {
+        const msgs = chats.find(
+            (c: any) =>
+                JSON.stringify(c.recipients) ===
+                JSON.stringify(recipients.slice(0, recipients.indexOf(type)))
+        ).messages;
+        newChat.messages = msgs;
 
         [newChat].forEach((newChat: any) => {
             if (
@@ -67,30 +72,55 @@ const ChatsProvider = (props: ChatsProviderProps) => {
                         JSON.stringify(
                             newChat.recipients.slice(
                                 0,
-                                newChat.recipients.indexOf(0)
+                                newChat.recipients.indexOf(type)
                             )
                         )
                 )
             ) {
                 let chatsCopy = [...chats];
 
+                let firstArr: any[] = [];
+                let secondArr: any[] = [];
+                if (type === -1) {
+                    firstArr = newChat.recipients.slice(
+                        0,
+                        newChat.recipients.indexOf(type)
+                    );
+                    secondArr = newChat.recipients.slice(
+                        newChat.recipients.indexOf(type)
+                    );
+                }
                 const index = chats.findIndex(
                     (c: any) =>
                         JSON.stringify(c.recipients) ===
                         JSON.stringify(
                             newChat.recipients.slice(
                                 0,
-                                newChat.recipients.indexOf(0)
+                                newChat.recipients.indexOf(type)
                             )
                         )
                 );
-                newChat.recipients = newChat.recipients.filter((r: any) => {
-                    return r !== 0;
-                });
+
+                newChat.recipients =
+                    type === 0
+                        ? newChat.recipients.filter((r: any) => {
+                              return r !== type;
+                          })
+                        : firstArr.filter((r: any) => !secondArr.includes(r));
                 chatsCopy[index] = newChat;
                 setChats(chatsCopy);
             }
         });
+    };
+
+    const updateChatRecipients = (recipients: any[]) => {
+        const newChat = { recipients, messages: [] };
+
+        if (newChat.recipients.includes(0)) {
+            updateType(newChat, recipients, 0);
+        } else if (newChat.recipients.includes(-1)) {
+            updateType(newChat, recipients, -1);
+        }
     };
 
     const addMessageToChat = useCallback(
