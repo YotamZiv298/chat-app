@@ -10,7 +10,7 @@ type RemoveUserModalProps = {
 const RemoveUserModal = (props: RemoveUserModalProps) => {
     const [selectedContactIds, setSelectedContactIds] = useState<any>([]);
     const { contacts } = useContacts();
-    const { selectedChat } = useChats();
+    const { selectedChat, updateChatRecipients } = useChats();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -31,6 +31,13 @@ const RemoveUserModal = (props: RemoveUserModalProps) => {
             alert('Can not remove all contacts');
             return;
         }
+        updateChatRecipients([
+            ...selectedChat.recipients.map((r: any) => {
+                return r.id;
+            }),
+            -1,
+            ...selectedContactIds,
+        ]);
         props.closeModal();
     };
 
